@@ -1,0 +1,21 @@
+1- Kütüphaneden alınan toplam kitap sayısı kaçtır ?
+
+select count(*) from hire
+
+2- Kütüphanede hiç kitap kiralamamış öğrencilerin listesi ?
+
+select id from users WHERE not id in(select userId from hire) AND userType='user' GROUP by id
+
+3- En çok kitap kiralayan öğrenci kimdir ?
+
+select fullName from hire inner join users on users.id = hire.userId group by userId order by userId DESC LIMIT 1
+
+4- Yazarların kitap sayısını listesi
+
+select fullName, count(*) as 'Kitap Sayisi' from book
+INNER join author on author.id = book.authorId
+GROUP by authorId
+
+5- Bütün öğrencilerin yaş ortalamasından büyük olan öğrencilerin listesi (Örneğin yaş ortalaması 15, Yaşı 15 ten büyük öğrencilerin listesi)
+
+select id from users WHERE age > (select AVG(age) from users)
